@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React, { useState } from 'react';
+import STLViewer from './STLViewer';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [file, setFile] = useState(null);
+
+    const handleFileChange = (e) => {
+        const selectedFile = e.target.files[0];
+        if (selectedFile) {
+            const fileUrl = URL.createObjectURL(selectedFile);
+            setFile(fileUrl);
+        }
+    };
+
+    return (
+        <div style={{ textAlign: 'center' }}>
+            <h1>STL File Translator</h1>
+            <input type="file" accept=".stl" onChange={handleFileChange} />
+            {file && <STLViewer file={file} />}
+        </div>
+    );
 }
 
 export default App;
